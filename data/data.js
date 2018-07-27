@@ -20,3 +20,5 @@ const data = {
     return comments.find((c) => c.id === id).replies;
   }
 }
+
+module.exports = data;
