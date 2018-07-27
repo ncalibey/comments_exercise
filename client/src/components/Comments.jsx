@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
-import comments from '../lib/comments';
+import React, {Component} from 'react';
 import ParentComment from './ParentComment';
 
 class Comments extends Component {
-  state = {
-    comments
-  };
 
   render() {
-    const parentComments = this.state.comments.map((c) => <ParentComment key={c.id} {...c}/>);
+    const parentComments = this.props.comments.map((c) => {
+      return <ParentComment
+               key={c.id}
+               comment={c}
+               onShowMoreClick={this.props.onShowMoreClick}
+             />;
+    });
+
     return (
       <div className="comments">
-        <h2>Comments ({this.state.comments.length})</h2>
+        <h2>Comments ({this.props.comments.length})</h2>
         { parentComments }
       </div>
     );
