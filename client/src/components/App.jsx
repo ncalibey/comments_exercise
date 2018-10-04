@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Comments from './Comments';
 import NewCommentForm from './NewCommentForm';
+import PropTypes from 'prop-types';
 
 class App extends Component {
   state = {
