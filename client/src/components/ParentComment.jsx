@@ -1,7 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 
-const ParentComment = ({comment, onShowMoreClick}) => (
+const ParentComment = ({ comment, onShowMoreClick }) => (
   <div className="parent-comment">
     <Comment
       id={comment.id}
