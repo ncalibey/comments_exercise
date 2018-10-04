@@ -4,27 +4,20 @@ import NewCommentForm from './NewCommentForm';
 import PropTypes from 'prop-types';
 
 class App extends Component {
-  state = {
-    comments: [],
+  static contextTypes = {
+    store: PropTypes.object
   };
 
   componentDidMount() {
+    const { store } = this.context;
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate();
+    });
+
     global.fetch('/api/comments')
       .then(response => response.json())
-      .then(comments => this.setState({comments}));
-  };
-
-  handleShowMoreClick = (id) => {
-    global.fetch(`/api/comment_replies?comment_id=${id}`)
-      .then(response => response.json())
-      .then(replies => {
-        this.setState({
-          comments: this.state.comments.map((c) => {
-            return c.id === id ? Object.assign({}, c, {replies}) : c;
-          })
-        });
-      });
-  };
+      .then(comments => store.dispatch({type: 'COMMENTS_FETCHED', comments}));
+  }
 
   handleCommentSubmit = (commentFields) => {
     global.fetch(`/api/comments`, {
@@ -38,11 +31,12 @@ class App extends Component {
   }
 
   render() {
+    const {store} = this.context;
+    const comments = store.getState().comments;
     return (
       <div>
         <Comments
-          comments={this.state.comments}
-          onShowMoreClick={this.handleShowMoreClick}
+          comments={comments}
         />
         <NewCommentForm
           onSubmit={this.handleCommentSubmit}
