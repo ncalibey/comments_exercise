@@ -5,6 +5,10 @@ const commentsReducer = (state = [], action) => {
         const { replies, ...comment_without_replies } = c;
         return comment_without_replies;
       });
+
+    case 'NEW_COMMENT_ADDED':
+      const { replies, ...comment_without_replies } = action.comment;
+      return state.concat(comment_without_replies);
     default:
       return state;
   }

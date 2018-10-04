@@ -19,17 +19,6 @@ class App extends Component {
       .then(comments => store.dispatch({type: 'COMMENTS_FETCHED', comments}));
   }
 
-  handleCommentSubmit = (commentFields) => {
-    global.fetch(`/api/comments`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({comment: commentFields})
-    }).then(response => response.json())
-      .then(comment => this.setState({comments: this.state.comments.concat(comment)}));
-  }
-
   render() {
     const {store} = this.context;
     const comments = store.getState().comments;
@@ -39,7 +28,6 @@ class App extends Component {
           comments={comments}
         />
         <NewCommentForm
-          onSubmit={this.handleCommentSubmit}
         />
       </div>
     );

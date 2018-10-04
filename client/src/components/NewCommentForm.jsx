@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class NewCommentForm extends Component {
   state = {
     author: '',
     body: '',
+  };
+
+  static contextTypes = {
+    store: PropTypes.object
   };
 
   handleFieldChange = (e) => {
@@ -14,8 +19,18 @@ export default class NewCommentForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.setState({author: '', body: ''})
+    const {store} = this.context;
+
+    global.fetch(`/api/comments`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({ comment: this.state })
+    }).then(response => response.json())
+      .then(comment => store.dispatch({ type: 'NEW_COMMENT_ADDED', comment }));
+
+    this.setState({author: '', body: ''});
   };
 
   render() {
