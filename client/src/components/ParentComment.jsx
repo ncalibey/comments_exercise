@@ -15,12 +15,12 @@ const ParentComment = ({ comment, onShowMoreClick }) => (
       }
       {
         comment.replies_count > comment.replies.length &&
-        <a
+        (<a
           className="show-more"
           onClick={(e) => onShowMoreClick(comment.id)}
         >
           Show More Replies ({comment.replies_count - comment.replies.length})
-        </a>
+        </a>)
       }
     </div>
   </div>
