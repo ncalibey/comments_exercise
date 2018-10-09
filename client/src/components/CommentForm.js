@@ -1,6 +1,27 @@
 import React, { Component } from 'react'
 
 class CommentForm extends Component {
+  state = {
+    fields: {
+      author: '',
+      body: '',
+    },
+  }
+
+  handleClick = (e) => {
+    e.preventDefault();
+
+    this.props.onSubmit(this.state.fields);
+  }
+
+  handleChange = (e) => {
+    const fields = Object.assign({}, this.state.fields, {
+      [e.target.name]: e.target.value,
+    })
+
+    this.setState({ fields });
+  }
+
   render() {
     return (
         <form action="" onSubmit={this.handleSubmit}>
@@ -10,7 +31,8 @@ class CommentForm extends Component {
             <input
               type="text"
               name="author"
-              defaultValue=''
+              value={this.state.fields.author}
+              onChange={this.handleChange}
             />
           </div>
 
@@ -18,12 +40,18 @@ class CommentForm extends Component {
             <label>Your Comment</label>
             <textarea
               name="body"
-              value=""
+              value={this.state.fields.body}
               cols="30"
               rows="10"
+              onChange={this.handleChange}
             ></textarea>
           </div>
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            onClick={this.handleClick}
+          >
+            Submit
+          </button>
         </form>
     );
   }

@@ -5,7 +5,21 @@ import CommentForm from './CommentForm.js'
 import data from '../lib/data.js'
 
 class App extends Component {
-  state = { data: [] }
+  state = {
+    data: []
+  }
+
+  handleCommentSubmit = (fields) => {
+    const comment = {
+      author: fields.author,
+      body: fields.body,
+      replies: [],
+    };
+
+    this.setState({
+      data: data.concat(comment),
+    });
+  }
 
   showReplies = (commentId) => {
     const self = this;
@@ -53,7 +67,9 @@ class App extends Component {
           data={this.state.data}
           showReplies={this.showReplies}
         />
-        <CommentForm />
+        <CommentForm
+          onSubmit={this.handleCommentSubmit}
+        />
       </div>
     );
   }
