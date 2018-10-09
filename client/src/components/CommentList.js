@@ -4,7 +4,11 @@ import ParentComment from './ParentComment.js'
 class CommentList extends Component {
   render() {
     const ParentCommentList = this.props.data.map((comment) => {
-      return <ParentComment comment={comment} key={comment.id} />
+      return <ParentComment
+                comment={comment}
+                key={comment.id}
+                showReplies={this.props.showReplies}
+              />
     });
     return (
       <div className="comments">

@@ -8,7 +8,11 @@ class ParentComment extends Component {
     return (
       <div className="parent-comment">
         <Comment { ...commentWithoutReplies } />
-        <ReplyList repliesCount={ replies_count} replies={ replies }/>
+        <ReplyList
+          repliesCount={ replies_count}
+          replies={ replies }
+          showReplies={this.props.showReplies}
+        />
       </div>
     );
   }

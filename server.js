@@ -15,7 +15,7 @@ app.get('/api/comments', (req, res) => {
 });
 
 app.get('/api/comment_replies', (req, res) => {
-  const comment_id = +req.params.comment_id;
+  const comment_id = req.query.comment_id;
   res.json(data.getRepliesForComment(comment_id));
 });
 
